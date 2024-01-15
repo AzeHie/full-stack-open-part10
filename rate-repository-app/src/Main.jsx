@@ -1,6 +1,6 @@
+import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import { StyleSheet, View } from 'react-native';
-import RepositoryList from './components/RepositoryList';
 import AppBar from './components/AppBar';
 
 const styles = StyleSheet.create({
@@ -11,10 +11,23 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  const navigation = useNavigation();
+
+  const navigateToRepositoryList = () => {
+    navigation.navigate('RepositoryList');
+  };
+
+  const navigateToSignIn = () => {
+    navigation.navigate('SignIn');
+  };
+
   return (
     <View style={styles.container}>
-      <AppBar />
-      <RepositoryList />
+      <AppBar
+        onRepositoryListPress={navigateToRepositoryList}
+        onSignInPress={navigateToSignIn}
+        />
+        <Text>Rate Repository App</Text>
     </View>
   );
 };
