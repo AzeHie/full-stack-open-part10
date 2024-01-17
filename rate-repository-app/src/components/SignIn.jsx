@@ -2,6 +2,12 @@ import { Text, Pressable, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  username: yup.string().min(3, 'Username length has to be atleast 3 characters').required('Username is required field'),
+  password: yup.string().min(5, 'Password length has to be atleast 5 characters').required('Password is required')
+})
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -32,6 +38,7 @@ const SignIn = () => {
       <Formik
         initialValues={{ username: '', password: '' }}
         onSubmit={onSubmit}
+        validationSchema={validationSchema}
       >
         {({ handleSubmit }) => (
           <>
