@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import AppBar from './components/AppBar';
+import Text from './components/Text';
 
 const styles = StyleSheet.create({
   container: {

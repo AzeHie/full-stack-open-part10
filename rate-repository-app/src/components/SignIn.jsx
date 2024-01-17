@@ -1,8 +1,9 @@
-import { Text, Pressable, View, StyleSheet } from 'react-native';
+import { Pressable, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import Text from './Text';
 
 const validationSchema = yup.object().shape({
   username: yup.string().min(3, 'Username length has to be atleast 3 characters').required('Username is required field'),
