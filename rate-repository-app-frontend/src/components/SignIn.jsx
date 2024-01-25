@@ -5,6 +5,9 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import Text from './Text';
 import useSignIn from '../hooks/useSignIn';
+import AuthStorage from '../utils/authStorage';
+
+const authStorage = new AuthStorage();
 
 const validationSchema = yup.object().shape({
   username: yup.string().min(3, 'Username length has to be atleast 3 characters').required('Username is required field'),
@@ -31,8 +34,8 @@ const SignIn = () => {
 
   const onSubmit = async (values) => {
     const token = await signIn(values.username, values.password);
-    console.log(token);
-    navigation.navigate('RepositoryList'); 
+    authStorage.setAccessToken(token);
+    navigation.navigate('RepositoryList');
   };
 
   return (
