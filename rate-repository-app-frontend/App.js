@@ -3,8 +3,8 @@ import RepositoryList from './src/components/RepositoryList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignIn from './src/components/SignIn';
-import createApolloClient from './src/utils/apolloClient';
 import { ApolloProvider } from '@apollo/client';
+import createApolloClient from './src/utils/apolloClient';
 
 const Stack = createNativeStackNavigator();
 

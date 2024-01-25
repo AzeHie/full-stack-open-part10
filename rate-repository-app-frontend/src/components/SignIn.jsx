@@ -4,6 +4,7 @@ import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Text from './Text';
+import useSignIn from '../hooks/useSignIn';
 
 const validationSchema = yup.object().shape({
   username: yup.string().min(3, 'Username length has to be atleast 3 characters').required('Username is required field'),
@@ -12,6 +13,7 @@ const validationSchema = yup.object().shape({
 
 const SignIn = () => {
   const navigation = useNavigation();
+  const [signIn] = useSignIn();
 
   const styles = StyleSheet.create({
     pressable: {
@@ -27,10 +29,9 @@ const SignIn = () => {
     }
   })
 
-  const onSubmit = (values) => {
-    console.log('username: ', values.username);
-    console.log('password: ', values.password);
-
+  const onSubmit = async (values) => {
+    const token = await signIn(values.username, values.password);
+    console.log(token);
     navigation.navigate('RepositoryList'); 
   };
 
