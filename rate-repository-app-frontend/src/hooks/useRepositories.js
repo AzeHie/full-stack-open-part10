@@ -6,12 +6,12 @@ const useRepositories = () => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  const { data } = useQuery(GET_REPOSITORIES, {
+  const { data, loading: queryLoading, refetch } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
   });
 
   const fetchRepositories = async () => {
-    setLoading(true);
+    setLoading(queryLoading);
 
     try {
       setRepositories(data.repositories);
@@ -26,7 +26,7 @@ const useRepositories = () => {
     fetchRepositories();
   }, []);
 
-  return { repositories, loading, refetch: fetchRepositories };
+  return { repositories, loading, refetch };
 };
 
 export default useRepositories;

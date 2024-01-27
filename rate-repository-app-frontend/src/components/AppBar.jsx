@@ -2,6 +2,9 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import AppBarTab from './AppBarTab';
 import PressableTab from './PressableTab';
+import { useQuery } from '@apollo/client';
+import { GET_USER } from '../graphql/queries';
+import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,19 +15,37 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBar = ({ onRepositoryListPress, onSignInPress }) => {
+const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress }) => {
+  const { data } = useQuery(GET_USER);
+
+  if (!data) {
+    return (
+      <View>
+        <Text>Loading..</Text>
+      </View>
+    );
+  }
+
+  const user = data.me;
+
+  console.log(user);
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <PressableTab onPress={onRepositoryListPress}>
           <AppBarTab tabText='REPOSITORIES' />
         </PressableTab>
-        <PressableTab onPress={onSignInPress}>
-          <AppBarTab tabText='SIGN IN' />
-        </PressableTab>
-        <PressableTab onPress={onSignInPress}>
-          <AppBarTab tabText='RANDOM TAB' />
-        </PressableTab>
+        {!user && (
+          <PressableTab onPress={onSignInPress}>
+            <AppBarTab tabText='SIGN IN' />
+          </PressableTab>
+        )}
+        {user && (
+          <PressableTab onPress={onSignOutPress}>
+            <AppBarTab tabText='LOG OUT' />
+          </PressableTab>
+        )}
         <PressableTab onPress={onSignInPress}>
           <AppBarTab tabText='RANDOM TAB 2' />
         </PressableTab>

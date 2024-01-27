@@ -3,6 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import AppBar from './components/AppBar';
 import Text from './components/Text';
+import useAuthStorage from './hooks/useAuthStorage';
+import { useApolloClient } from '@apollo/client';
+import useRepositories from './hooks/useRepositories';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,6 +16,9 @@ const styles = StyleSheet.create({
 
 const Main = () => {
   const navigation = useNavigation();
+  const authStorage = useAuthStorage();
+  const apolloClient = useApolloClient();
+  const { refetch } = useRepositories();
 
   const navigateToRepositoryList = () => {
     navigation.navigate('RepositoryList');
@@ -22,11 +28,19 @@ const Main = () => {
     navigation.navigate('SignIn');
   };
 
+  const handleSignOut = async () => {
+    await authStorage.removeAccessToken();
+    apolloClient.resetStore();
+    refetch();
+    navigation.navigate('Main');
+  }
+
   return (
     <View style={styles.container}>
       <AppBar
         onRepositoryListPress={navigateToRepositoryList}
         onSignInPress={navigateToSignIn}
+        onSignOutPress={handleSignOut}
         />
         <Text>Rate Repository App</Text>
     </View>
