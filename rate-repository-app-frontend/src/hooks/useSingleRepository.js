@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { GET_REPOSITORY_BY_ID } from '../graphql/queries';
 
 const useSingleRepository = (id) => {
-  const [repository, setRepository] = useState();
+  const [repositoryInfo, setRepositoryInfo] = useState();
 
   const { data, error } = useQuery(GET_REPOSITORY_BY_ID, {
     variables: { id: id }
@@ -15,11 +15,11 @@ const useSingleRepository = (id) => {
 
   useEffect(() => {
     if (data) {
-      setRepository(data.repository);
+      setRepositoryInfo(data.repository);
     }
   }, [data]);
 
-  return { repository };
+  return { repositoryInfo };
 };
 
 export default useSingleRepository;

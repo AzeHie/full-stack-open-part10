@@ -8,6 +8,7 @@ import createApolloClient from './src/utils/apolloClient';
 import AuthStorage from './src/utils/authStorage';
 import AuthStorageContext from './src/contexts/AuthStorageContext';
 import RepositoryItem from './src/components/RepositoryItem';
+import SingleRepository from './src/components/SingleRepository';
 
 const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
@@ -16,21 +17,26 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <ApolloProvider client={apolloClient}>
-        <AuthStorageContext.Provider value={authStorage}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen name='Main' component={Main} />
-              <Stack.Screen name='RepositoryList' component={RepositoryList} />
-              <Stack.Screen
-                name='RepositoryItem'
-                component={RepositoryItem}
-                initialParams={{ repositoryId: '', repositoryItem: {} }}
-              />
-              <Stack.Screen name='SignIn' component={SignIn} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </AuthStorageContext.Provider>
-      </ApolloProvider>
+    <ApolloProvider client={apolloClient}>
+      <AuthStorageContext.Provider value={authStorage}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name='Main' component={Main} />
+            <Stack.Screen name='RepositoryList' component={RepositoryList} />
+            <Stack.Screen
+              name='RepositoryItem'
+              component={RepositoryItem}
+              initialParams={{ repositoryId: '', repositoryItem: {} }}
+            />
+            <Stack.Screen
+              name='SingleRepositoryView'
+              component={SingleRepository}
+              initialParams={{ repositoryId: '', repositoryItem: {} }}
+            />
+            <Stack.Screen name='SignIn' component={SignIn} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthStorageContext.Provider>
+    </ApolloProvider>
   );
 }

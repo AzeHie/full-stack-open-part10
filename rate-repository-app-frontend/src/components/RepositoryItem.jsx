@@ -1,9 +1,6 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import * as Linking from 'expo-linking';
+import { Image, StyleSheet, View } from 'react-native';
 
 import Text from './Text';
-import { useRoute } from '@react-navigation/native';
-import SingleRepository from './SingleRepository';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,7 +8,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 5,
-    paddingRight: 5
+    paddingRight: 5,
   },
   detailView: {
     flexDirection: 'row',
@@ -65,48 +62,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
-  pressable: {
-    backgroundColor: '#3495eb',
-    padding: 5,
-    margin: 5,
-    borderRadius: 5,
-  },
-  pressableText: {
-    fontSize: 20,
-    color: 'white',
-    textAlign: 'center',
-  },
 });
 
-const RepositoryItem = ({ repositoryItem }) => {
-  const route = useRoute();
-  
-  let repositoryId;
-  if (route.params) {
-    repositoryId = route.params.repositoryId;
-    
-    if (!repositoryItem) {
-      repositoryItem = route.params.repositoryItem;
-    }
+const formatData = (count) => {
+  if (count >= 1000) {
+    const formatted = (count / 1000).toFixed(1);
+    return formatted.endsWith('.0')
+      ? `${formatted.slice(0, -2)}k`
+      : `${formatted}k`;
   }
-  
-  const singleRepositoryView = repositoryId ? true : false;
+  return count.toString();
+};
 
-  const formatData = (count) => {
-    if (count >= 1000) {
-      const formatted = (count / 1000).toFixed(1);
-      return formatted.endsWith('.0')
-        ? `${formatted.slice(0, -2)}k`
-        : `${formatted}k`;
-    }
-    return count.toString();
-  };
-
+const RepositoryItem = ({ repositoryItem }) => {
   const updatedRepositoryItem = {
     ...repositoryItem,
     stargazersCount: formatData(repositoryItem.stargazersCount),
-    forksCount: formatData(repositoryItem.forksCount)
-  }
+    forksCount: formatData(repositoryItem.forksCount),
+  };
 
   return (
     <View testID='repositoryItem' style={styles.container}>
@@ -125,7 +98,9 @@ const RepositoryItem = ({ repositoryItem }) => {
       </View>
       <View style={styles.extraInfoView}>
         <View style={styles.stars}>
-          <Text style={styles.count}>{updatedRepositoryItem.stargazersCount}</Text>
+          <Text style={styles.count}>
+            {updatedRepositoryItem.stargazersCount}
+          </Text>
           <Text>Stars</Text>
         </View>
         <View style={styles.forks}>
@@ -137,16 +112,13 @@ const RepositoryItem = ({ repositoryItem }) => {
           <Text>Reviews</Text>
         </View>
         <View style={styles.rating}>
-          <Text style={styles.count}> {updatedRepositoryItem.ratingAverage}</Text>
+          <Text style={styles.count}>
+            {' '}
+            {updatedRepositoryItem.ratingAverage}
+          </Text>
           <Text>Rating</Text>
         </View>
       </View>
-      {singleRepositoryView && (
-        <TouchableOpacity style={styles.pressable} onPress={() => Linking.openURL(updatedRepositoryItem.url)}>
-          <Text style={styles.pressableText}>OPEN IN GITHUB</Text>
-        </TouchableOpacity>
-      )}
-      <SingleRepository id={repositoryId}/>
     </View>
   );
 };

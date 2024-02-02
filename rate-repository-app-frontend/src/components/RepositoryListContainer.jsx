@@ -18,7 +18,7 @@ const RepositoryListContainer = ({ repositories, onRepositoryItemPress }) => {
     : [];
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => onRepositoryItemPress(item, item.id)}>
+    <TouchableOpacity onPress={() => onRepositoryItemPress(item.id, item)}>
       <RepositoryItem repositoryItem={item} />
     </TouchableOpacity>
   );
