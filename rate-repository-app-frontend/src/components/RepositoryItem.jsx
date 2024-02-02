@@ -82,12 +82,11 @@ const RepositoryItem = ({ repositoryItem }) => {
   const route = useRoute();
   
   let repositoryId;
-  let updatedRepositoryItem = { ...repositoryItem };
   if (route.params) {
     repositoryId = route.params.repositoryId;
     
     if (!repositoryItem) {
-      updatedRepositoryItem = {...route.params.repositoryItem};
+      repositoryItem = route.params.repositoryItem;
     }
   }
   
@@ -103,7 +102,7 @@ const RepositoryItem = ({ repositoryItem }) => {
     return count.toString();
   };
 
-  updatedRepositoryItem = {
+  const updatedRepositoryItem = {
     ...repositoryItem,
     stargazersCount: formatData(repositoryItem.stargazersCount),
     forksCount: formatData(repositoryItem.forksCount)
