@@ -6,7 +6,11 @@ const useRepositories = () => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  const { data, loading: queryLoading, refetch } = useQuery(GET_REPOSITORIES, {
+  const {
+    data,
+    loading: queryLoading,
+    refetch,
+  } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
   });
 
@@ -23,7 +27,9 @@ const useRepositories = () => {
   };
 
   useEffect(() => {
-    fetchRepositories();
+    if (data) {
+      fetchRepositories();
+    }
   }, []);
 
   return { repositories, loading, refetch };

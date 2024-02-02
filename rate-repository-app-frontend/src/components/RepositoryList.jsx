@@ -9,7 +9,6 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(); 
   const navigation = useNavigation();
 
-
   const handleRepositoryItemPress = (repositoryItem, repositoryId) => {
     navigation.navigate('RepositoryItem', { repositoryItem, repositoryId });
   };
