@@ -28,8 +28,6 @@ const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress }) => {
 
   const user = data.me;
 
-  console.log(user);
-
   return (
     <View style={styles.container}>
       <ScrollView horizontal>

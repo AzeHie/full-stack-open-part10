@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -46,9 +46,9 @@ const SignInForm = ({ onSubmit }) => {
               placeholder='PASSWORD'
               secureTextEntry
             />
-            <Pressable style={styles.pressable} onPress={handleSubmit}>
+            <TouchableOpacity style={styles.pressable} onPress={handleSubmit}>
               <Text style={styles.pressableText}>Sign in</Text>
-            </Pressable>
+            </TouchableOpacity>
           </>
         )}
       </Formik>

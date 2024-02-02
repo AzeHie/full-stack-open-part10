@@ -1,19 +1,9 @@
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, TouchableOpacity } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import Text from './Text';
+import ItemSeparator from './ItemSeparator';
 
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-});
-
-const ItemSeparator = () => <View style={styles.separator} />;
-
-const renderItem = ({ item }) => <RepositoryItem repositoryItem={item} />;
-
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, onRepositoryItemPress }) => {
   if (!repositories) {
     return (
       <View>
@@ -27,8 +17,14 @@ const RepositoryListContainer = ({ repositories }) => {
     ? repositories.edges.map((edge) => edge.node)
     : [];
 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => onRepositoryItemPress(item, item.id)}>
+      <RepositoryItem repositoryItem={item} />
+    </TouchableOpacity>
+  );
+
   return (
-    <FlatList 
+    <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}

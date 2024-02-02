@@ -1,7 +1,24 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import * as Linking from 'expo-linking';
+
 import Text from './Text';
+import { useRoute } from '@react-navigation/native';
+import SingleRepository from './SingleRepository';
 
 const RepositoryItem = ({ repositoryItem }) => {
+  const route = useRoute();
+  
+  let repositoryId;
+  if (route.params) {
+    repositoryId = route.params.repositoryId;
+    
+    if (!repositoryItem) {
+      repositoryItem = route.params.repositoryItem;
+    }
+  }
+  
+  const singleRepositoryView = repositoryId ? true : false;
+
   const formatStars = (count) => {
     if (count >= 1000) {
       const formatted = (count / 1000).toFixed(1);
@@ -14,12 +31,11 @@ const RepositoryItem = ({ repositoryItem }) => {
 
   const styles = StyleSheet.create({
     container: {
-      marginTop: 5,
-      marginLeft: 5,
-      marginRight: 5,
-      borderBottomWidth: 15,
-      borderBottomColor: '#dedede',
-      borderBottomStyle: 'solid',
+      backgroundColor: 'white',
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 5,
+      paddingRight: 5
     },
     detailView: {
       flexDirection: 'row',
@@ -36,7 +52,7 @@ const RepositoryItem = ({ repositoryItem }) => {
     description: {
       fontStyle: 'italic',
       paddingBottom: 5,
-      marginRight: 50
+      marginRight: 50,
     },
     avatar: {
       width: 50,
@@ -73,12 +89,23 @@ const RepositoryItem = ({ repositoryItem }) => {
       fontWeight: 'bold',
       fontSize: 15,
     },
+    pressable: {
+      backgroundColor: '#3495eb',
+      padding: 5,
+      margin: 5,
+      borderRadius: 5,
+    },
+    pressableText: {
+      fontSize: 20,
+      color: 'white',
+      textAlign: 'center',
+    },
   });
 
   repositoryItem.stargazersCount = formatStars(repositoryItem.stargazersCount);
 
   return (
-    <View testID='repositoryItem'  style={styles.container}>
+    <View testID='repositoryItem' style={styles.container}>
       <View style={styles.detailView}>
         <Image
           style={styles.avatar}
@@ -110,6 +137,12 @@ const RepositoryItem = ({ repositoryItem }) => {
           <Text>Rating</Text>
         </View>
       </View>
+      {singleRepositoryView && (
+        <TouchableOpacity style={styles.pressable} onPress={() => Linking.openURL(repositoryItem.url)}>
+          <Text style={styles.pressableText}>OPEN IN GITHUB</Text>
+        </TouchableOpacity>
+      )}
+      <SingleRepository id={repositoryId}/>
     </View>
   );
 };
