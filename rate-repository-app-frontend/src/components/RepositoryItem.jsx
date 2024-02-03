@@ -78,7 +78,7 @@ const RepositoryItem = ({ repositoryItem }) => {
   const updatedRepositoryItem = {
     ...repositoryItem,
     stargazersCount: formatData(repositoryItem.stargazersCount),
-    forksCount: formatData(repositoryItem.forksCount),
+    forksCount: formatData(repositoryItem.forksCount)
   };
 
   return (
