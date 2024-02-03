@@ -9,6 +9,7 @@ import AuthStorage from './src/utils/authStorage';
 import AuthStorageContext from './src/contexts/AuthStorageContext';
 import RepositoryItem from './src/components/RepositoryItem';
 import SingleRepository from './src/components/SingleRepository';
+import NewReview from './src/components/NewReview';
 
 const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
@@ -34,6 +35,7 @@ export default function App() {
               initialParams={{ repositoryId: '', repositoryItem: {} }}
             />
             <Stack.Screen name='SignIn' component={SignIn} />
+            <Stack.Screen name='NewReview' component={NewReview} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthStorageContext.Provider>

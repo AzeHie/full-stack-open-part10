@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress }) => {
+const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onNewReviewPress }) => {
   const { data } = useQuery(GET_USER);
 
   if (!data) {
@@ -44,9 +44,11 @@ const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress }) => {
             <AppBarTab tabText='LOG OUT' />
           </PressableTab>
         )}
-        <PressableTab onPress={onSignInPress}>
-          <AppBarTab tabText='RANDOM TAB 2' />
+        {user && (
+        <PressableTab onPress={onNewReviewPress}>
+          <AppBarTab tabText='ADD REVIEW' />
         </PressableTab>
+        )}
       </ScrollView>
     </View>
   );

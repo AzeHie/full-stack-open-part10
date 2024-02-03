@@ -33,6 +33,10 @@ const Main = () => {
     apolloClient.resetStore();
     refetch();
     navigation.navigate('Main');
+  };
+
+  const handleNewReview = async () => {
+    navigation.navigate('NewReview')
   }
 
   return (
@@ -41,6 +45,7 @@ const Main = () => {
         onRepositoryListPress={navigateToRepositoryList}
         onSignInPress={navigateToSignIn}
         onSignOutPress={handleSignOut}
+        onNewReviewPress={handleNewReview}
         />
         <Text>Rate Repository App</Text>
     </View>
