@@ -1,22 +1,11 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import FormikTextInput from './FormikTextInput';
+import FormikTextInput from '../FormikTextInput';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import Text from './Text';
+import Text from '../Text';
 
-const validationSchema = yup.object().shape({
-  username: yup
-    .string()
-    .min(3, 'Username length has to be atleast 3 characters')
-    .required('Username is required field'),
-  password: yup
-    .string()
-    .min(5, 'Password length has to be atleast 5 characters')
-    .required('Password is required'),
-});
-
-const SignInForm = ({ onSubmit }) => {
+const AuthForm = ({ onSubmit, isSignIn }) => {
   const styles = StyleSheet.create({
     pressable: {
       backgroundColor: '#3495eb',
@@ -29,6 +18,23 @@ const SignInForm = ({ onSubmit }) => {
       color: 'white',
       textAlign: 'center',
     },
+  });
+
+  const validationSchema = yup.object().shape({
+    username: yup
+      .string()
+      .min(3, 'Username length has to be atleast 3 characters')
+      .required('Username is required field'),
+    password: yup
+      .string()
+      .min(5, 'Password length has to be atleast 5 characters')
+      .required('Password is required'),
+    confirmPassword: !isSignIn
+      ? yup
+          .string()
+          .oneOf([yup.ref('password'), null], 'Passwords must match')
+          .required('Password confirmation is required')
+      : yup.string(),
   });
 
   return (
@@ -46,6 +52,13 @@ const SignInForm = ({ onSubmit }) => {
               placeholder='PASSWORD'
               secureTextEntry
             />
+            {!isSignIn && (
+              <FormikTextInput
+                name='confirmPassword'
+                placeholder='CONFIRM PASSWORD'
+                secureTextEntry
+              />
+            )}
             <TouchableOpacity style={styles.pressable} onPress={handleSubmit}>
               <Text style={styles.pressableText}>Sign in</Text>
             </TouchableOpacity>
@@ -56,4 +69,4 @@ const SignInForm = ({ onSubmit }) => {
   );
 };
 
-export default SignInForm;
+export default AuthForm;

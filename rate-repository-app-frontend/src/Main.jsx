@@ -24,8 +24,12 @@ const Main = () => {
   };
 
   const navigateToSignIn = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate('Auth', { signIn: true });
   };
+
+  const navigateToSignUp = () => {
+    navigation.navigate('Auth', { signIn: false });
+  }
 
   const handleSignOut = async () => {
     await authStorage.removeAccessToken();
@@ -43,6 +47,7 @@ const Main = () => {
       <AppBar
         onRepositoryListPress={navigateToRepositoryList}
         onSignInPress={navigateToSignIn}
+        onSignUpPress={navigateToSignUp}
         onSignOutPress={handleSignOut}
         onNewReviewPress={handleNewReview}
         />

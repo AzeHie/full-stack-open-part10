@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onNewReviewPress }) => {
+const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onSignUpPress, onNewReviewPress }) => {
   const { data } = useQuery(GET_USER);
 
   if (!data) {
@@ -37,6 +37,11 @@ const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onNewRev
         {!user && (
           <PressableTab onPress={onSignInPress}>
             <AppBarTab tabText='SIGN IN' />
+          </PressableTab>
+        )}
+        {!user && (
+          <PressableTab onPress={onSignUpPress}>
+            <AppBarTab tabText='SIGN UP' />
           </PressableTab>
         )}
         {user && (

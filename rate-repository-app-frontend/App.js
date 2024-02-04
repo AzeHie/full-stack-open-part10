@@ -2,7 +2,6 @@ import Main from './src/Main';
 import RepositoryList from './src/components/RepositoryList';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignIn from './src/components/SignIn';
 import { ApolloProvider } from '@apollo/client';
 import createApolloClient from './src/utils/apolloClient';
 import AuthStorage from './src/utils/authStorage';
@@ -10,6 +9,7 @@ import AuthStorageContext from './src/contexts/AuthStorageContext';
 import RepositoryItem from './src/components/RepositoryItem';
 import SingleRepository from './src/components/SingleRepository';
 import NewReview from './src/components/NewReview';
+import Auth from './src/components/Auth/Auth';
 
 const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
@@ -30,7 +30,7 @@ export default function App() {
               component={SingleRepository}
               initialParams={{ repositoryId: '' }}
             />
-            <Stack.Screen name='SignIn' component={SignIn} />
+            <Stack.Screen name='Auth' component={Auth} initialParams={{ signIn: true }} />
             <Stack.Screen name='NewReview' component={NewReview} />
           </Stack.Navigator>
         </NavigationContainer>
