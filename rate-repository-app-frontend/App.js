@@ -24,15 +24,11 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name='Main' component={Main} />
             <Stack.Screen name='RepositoryList' component={RepositoryList} />
-            <Stack.Screen
-              name='RepositoryItem'
-              component={RepositoryItem}
-              initialParams={{ repositoryId: '', repositoryItem: {} }}
-            />
+            <Stack.Screen name='RepositoryItem' component={RepositoryItem} />
             <Stack.Screen
               name='SingleRepositoryView'
               component={SingleRepository}
-              initialParams={{ repositoryId: '', repositoryItem: {} }}
+              initialParams={{ repositoryId: '' }}
             />
             <Stack.Screen name='SignIn' component={SignIn} />
             <Stack.Screen name='NewReview' component={NewReview} />

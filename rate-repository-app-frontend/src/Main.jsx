@@ -2,7 +2,6 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import AppBar from './components/AppBar';
-import Text from './components/Text';
 import useAuthStorage from './hooks/useAuthStorage';
 import { useApolloClient } from '@apollo/client';
 import useRepositories from './hooks/useRepositories';
@@ -47,7 +46,6 @@ const Main = () => {
         onSignOutPress={handleSignOut}
         onNewReviewPress={handleNewReview}
         />
-        <Text>Rate Repository App</Text>
     </View>
   );
 };

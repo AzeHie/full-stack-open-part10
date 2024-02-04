@@ -8,11 +8,12 @@ import {
 import { parseISO, format } from 'date-fns';
 
 import Text from './Text';
-import useSingleRepository from '../hooks/useSingleRepository';
 import ItemSeparator from './ItemSeparator';
 import RepositoryItem from './RepositoryItem';
 import { useRoute } from '@react-navigation/native';
 import { globalStyles } from '../utils/styles';
+import useReviews from '../hooks/useReviews';
+import useSingleRepository from '../hooks/useSingleRepository';
 
 const styles = StyleSheet.create({
   container: {
@@ -114,26 +115,26 @@ const SingleRepository = () => {
   const route = useRoute();
 
   const id = route.params.repositoryId;
-  const repositoryItem = route.params.repositoryItem;
 
   if (!id) {
     return null;
   }
 
-  const { repositoryInfo } = useSingleRepository(id);
+  const { repository } = useSingleRepository(id);
+  const { reviews } = useReviews(id);
 
-  if (!repositoryInfo) {
+  if (!reviews || !repository) {
     return null;
   }
 
-  const reviews = repositoryInfo.reviews.edges.map((edge) => edge.node);
+  const mappedReviews = reviews.reviews.edges.map((edge) => edge.node);
 
   return (
     <FlatList
       style={globalStyles.container}
-      data={reviews}
+      data={mappedReviews}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={<RepositoryInfo repositoryItem={repositoryItem} />}
+      ListHeaderComponent={<RepositoryInfo repositoryItem={repository} />}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
     />

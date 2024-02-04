@@ -44,7 +44,7 @@ const ReviewForm = ({ onSubmit }) => {
         initialValues={{
           ownerName: '',
           repositoryName: '',
-          rating: 0,
+          rating: '',
           review: '',
         }}
         onSubmit={onSubmit}

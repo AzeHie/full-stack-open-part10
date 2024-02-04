@@ -9,8 +9,8 @@ const RepositoryList = () => {
   const { repositories } = useRepositories(); 
   const navigation = useNavigation();
 
-  const handleRepositoryItemPress = (repositoryId, repositoryItem) => {
-    navigation.navigate('SingleRepositoryView', { repositoryId, repositoryItem });
+  const handleRepositoryItemPress = (repositoryId) => {
+    navigation.navigate('SingleRepositoryView', { repositoryId });
   };
 
   return <View style={globalStyles.container}>
