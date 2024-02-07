@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import {
   FlatList,
   Linking,
@@ -5,12 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { parseISO, format } from 'date-fns';
 
 import Text from './Text';
 import ItemSeparator from './ItemSeparator';
 import RepositoryItem from './RepositoryItem';
-import { useRoute } from '@react-navigation/native';
 import { globalStyles } from '../utils/styles';
 import useReviews from '../hooks/useReviews';
 import useSingleRepository from '../hooks/useSingleRepository';
@@ -123,8 +124,12 @@ const SingleRepository = () => {
   const { repository } = useSingleRepository(id);
   const { reviews } = useReviews(id);
 
-  if (!reviews || !repository) {
-    return null;
+  if (!repository || !reviews) {
+    return (
+      <View>
+        <Text>Loading..</Text>
+      </View>
+    );
   }
 
   const mappedReviews = reviews.reviews.edges.map((edge) => edge.node);
@@ -140,5 +145,4 @@ const SingleRepository = () => {
     />
   );
 };
-
 export default SingleRepository;

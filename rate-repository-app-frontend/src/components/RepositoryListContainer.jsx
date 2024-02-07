@@ -2,8 +2,9 @@ import { FlatList, View, TouchableOpacity } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import Text from './Text';
 import ItemSeparator from './ItemSeparator';
+import RepositoryOrderSelection from './ReposityOrderSelection';
 
-const RepositoryListContainer = ({ repositories, onRepositoryItemPress }) => {
+const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderChange, orderBy }) => {
   if (!repositories) {
     return (
       <View>
@@ -26,6 +27,7 @@ const RepositoryListContainer = ({ repositories, onRepositoryItemPress }) => {
   return (
     <FlatList
       data={repositoryNodes}
+      ListHeaderComponent={<RepositoryOrderSelection onOrderChange={onOrderChange} orderBy={orderBy} />}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
     />

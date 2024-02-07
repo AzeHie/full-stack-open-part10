@@ -6,7 +6,7 @@ const useReviews = (id) => {
   const [reviews, setReviews] = useState();
 
   const { data, error } = useQuery(GET_REVIEWS, {
-    variables: { id: id },
+    variables: { id: id},
     fetchPolicy: 'cache-and-network'
   });
 

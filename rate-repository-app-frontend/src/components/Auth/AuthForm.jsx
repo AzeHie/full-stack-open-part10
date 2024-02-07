@@ -24,10 +24,12 @@ const AuthForm = ({ onSubmit, isSignIn }) => {
     username: yup
       .string()
       .min(3, 'Username length has to be atleast 3 characters')
+      .max(30, 'Username can be max 50 characthers')
       .required('Username is required field'),
     password: yup
       .string()
       .min(5, 'Password length has to be atleast 5 characters')
+      .max(50, 'Password can be max 50 characters')
       .required('Password is required'),
     confirmPassword: !isSignIn
       ? yup
