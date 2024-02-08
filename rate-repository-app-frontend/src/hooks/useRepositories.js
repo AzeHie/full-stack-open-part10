@@ -2,41 +2,49 @@ import { useQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
-const useRepositories = (orderBy) => {
+const useRepositories = (orderBy, searchKeyword) => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  let queryVariables;
+  console.log('USEREPOS keyword: ', searchKeyword);
+  console.log('USERREPOS orderBy: ', orderBy);
+  let queryVariables = {};
   if (orderBy === 'RATING_AVERAGE_DESC') {
     queryVariables = {
-      orderBy: orderBy.slice(0, -5),
-      orderDirection: orderBy.slice(-4),
+      orderBy: 'RATING_AVERAGE',
+      orderDirection: 'DESC',
     };
   } else if (orderBy === 'RATING_AVERAGE_ASC') {
     queryVariables = {
-      orderBy: orderBy.slice(0, -4),
-      orderDirection: orderBy.slice(-3),
+      orderBy: 'RATING_AVERAGE',
+      orderDirection: 'ASC',
     };
-  } else {
+  } else if (orderBy === 'CREATED_AT') {
     queryVariables = {
-      orderBy,
+      orderBy, // CREATED_AT
     };
   }
 
-  console.log('USEREPOS: ', queryVariables);
+  if (searchKeyword) {
+    queryVariables = {
+      ...queryVariables,
+      searchKeyword,
+    };
+  }
+
+  console.log('QUERYVARIABLES', queryVariables);
 
   const {
     data,
     loading: queryLoading,
     refetch,
   } = useQuery(GET_REPOSITORIES, {
-    variables: orderBy ? queryVariables : null,
+    variables: queryVariables,
     fetchPolicy: 'cache-and-network',
   });
 
   const fetchRepositories = async () => {
     setLoading(queryLoading);
-
     try {
       setRepositories(data.repositories);
     } catch (error) {
@@ -47,10 +55,11 @@ const useRepositories = (orderBy) => {
   };
 
   useEffect(() => {
+    console.log('fetching repos');
     if (data) {
       fetchRepositories();
     }
-  }, []);
+  }, [orderBy, searchKeyword]);
 
   return { repositories, loading, refetch };
 };

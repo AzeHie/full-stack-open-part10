@@ -9,12 +9,12 @@ import {
 
 import { parseISO, format } from 'date-fns';
 
-import Text from './Text';
-import ItemSeparator from './ItemSeparator';
+import Text from '../Text';
+import ItemSeparator from '../ItemSeparator';
 import RepositoryItem from './RepositoryItem';
-import { globalStyles } from '../utils/styles';
-import useReviews from '../hooks/useReviews';
-import useSingleRepository from '../hooks/useSingleRepository';
+import { globalStyles } from '../../utils/styles';
+import useReviews from '../../hooks/useReviews';
+import useSingleRepository from '../../hooks/useSingleRepository';
 
 const styles = StyleSheet.create({
   container: {

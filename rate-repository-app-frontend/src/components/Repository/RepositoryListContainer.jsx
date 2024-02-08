@@ -1,10 +1,11 @@
 import { FlatList, View, TouchableOpacity } from 'react-native';
 import RepositoryItem from './RepositoryItem';
-import Text from './Text';
-import ItemSeparator from './ItemSeparator';
+import Text from '../Text';
+import ItemSeparator from '../ItemSeparator';
 import RepositoryOrderSelection from './ReposityOrderSelection';
+import RepositorySearch from './RepositorySearch';
 
-const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderChange, orderBy }) => {
+const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderChange, orderBy, onSearchChange, searchKeyword }) => {
   if (!repositories) {
     return (
       <View>
@@ -25,12 +26,15 @@ const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderC
   );
 
   return (
-    <FlatList
-      data={repositoryNodes}
-      ListHeaderComponent={<RepositoryOrderSelection onOrderChange={onOrderChange} orderBy={orderBy} />}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem}
-    />
+    <View>
+      <RepositorySearch onSearchChange={onSearchChange} searchKeyword={searchKeyword} />
+      <FlatList
+        data={repositoryNodes}
+        ListHeaderComponent={<RepositoryOrderSelection onOrderChange={onOrderChange} orderBy={orderBy} />}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 

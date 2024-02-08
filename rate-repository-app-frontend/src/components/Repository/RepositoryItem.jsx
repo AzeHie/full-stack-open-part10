@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
 
-import Text from './Text';
+import Text from '../Text';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 5,
     paddingRight: 5,
+    zIndex: -1
   },
   detailView: {
     flexDirection: 'row',
