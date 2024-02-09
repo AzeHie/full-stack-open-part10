@@ -17,8 +17,6 @@ const useSignUp = () => {
         },
       });
 
-      console.log('RESPONSE: ', response);
-
       const newUsername = response.data.createUser.username;
 
       return newUsername;

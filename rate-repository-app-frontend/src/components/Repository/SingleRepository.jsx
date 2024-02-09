@@ -55,8 +55,6 @@ const SingleRepository = () => {
 
   const id = route.params.repositoryId;
 
-  console.log('repositoryId', id);
-
   if (!id) {
     return null;
   }

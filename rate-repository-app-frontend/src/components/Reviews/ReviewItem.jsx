@@ -72,7 +72,6 @@ const formatDate = (dateString) => {
 const extractId = (id) => {
   const dotIndex = id.indexOf('.'); // find out the first dot
   const reviewId = id.substring(dotIndex + 1); // Extract from the index after the first dot
-  console.log(reviewId);
   return reviewId;
 };
 

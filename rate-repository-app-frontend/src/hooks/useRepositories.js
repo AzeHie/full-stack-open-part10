@@ -6,8 +6,6 @@ const useRepositories = (orderBy, searchKeyword) => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
-  console.log('USEREPOS keyword: ', searchKeyword);
-  console.log('USERREPOS orderBy: ', orderBy);
   let queryVariables = {};
   if (orderBy === 'RATING_AVERAGE_DESC') {
     queryVariables = {
@@ -32,8 +30,6 @@ const useRepositories = (orderBy, searchKeyword) => {
     };
   }
 
-  console.log('QUERYVARIABLES', queryVariables);
-
   const {
     data,
     loading: queryLoading,
@@ -55,7 +51,6 @@ const useRepositories = (orderBy, searchKeyword) => {
   };
 
   useEffect(() => {
-    console.log('fetching repos');
     if (data) {
       fetchRepositories();
     }
