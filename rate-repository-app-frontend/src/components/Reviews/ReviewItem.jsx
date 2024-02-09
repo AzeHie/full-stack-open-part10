@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   reviewRatingContainer: {
     marginRight: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   reviewRatingText: {
     padding: 10,
@@ -45,51 +45,63 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20
+    marginTop: 20,
   },
   openButton: {
     backgroundColor: '#0d9dd1',
     marginRight: 4,
     padding: 15,
-    borderRadius: 5
+    borderRadius: 5,
   },
   deleteButton: {
     backgroundColor: '#d11a0d',
     marginLeft: 4,
     padding: 15,
-    borderRadius: 5
+    borderRadius: 5,
   },
   buttonText: {
-    color: 'white'
-  }
+    color: 'white',
+  },
 });
 
+const formatDate = (dateString) => {
+  const date = parseISO(dateString);
+  return format(date, 'dd.MM.yyyy');
+};
+
+const extractId = (id) => {
+  const dotIndex = id.indexOf('.'); // find out the first dot
+  const reviewId = id.substring(dotIndex + 1); // Extract from the index after the first dot
+  console.log(reviewId);
+  return reviewId;
+};
+
 const ReviewItem = ({ review, isMyReview, onOpenPress, onDeletePress }) => {
-  const formatDate = (dateString) => {
-    const date = parseISO(dateString);
-    return format(date, 'dd.MM.yyyy');
-  };
+  if (!review) {
+    return null;
+  }
 
   const updatedReview = {
     ...review,
     createdAt: formatDate(review.createdAt),
+    repositoryId: extractId(review.id)
   };
 
   return (
     <View style={styles.container}>
-    <View style={styles.reviewContainer}>
-      <View style={styles.reviewRatingContainer}>
-        <Text style={styles.reviewRatingText}>{updatedReview.rating}</Text>
+      <View style={styles.reviewContainer}>
+        <View style={styles.reviewRatingContainer}>
+          <Text style={styles.reviewRatingText}>{updatedReview.rating}</Text>
+        </View>
+        <View style={styles.reviewTextContainer}>
+          <Text style={styles.reviewUser}>{updatedReview.user.username}</Text>
+          <Text style={styles.reviewDate}>{updatedReview.createdAt}</Text>
+          <Text style={styles.reviewText}>{updatedReview.text}</Text>
+        </View>
       </View>
-      <View style={styles.reviewTextContainer}>
-        <Text style={styles.reviewUser}>{updatedReview.user.username}</Text>
-        <Text style={styles.reviewDate}>{updatedReview.createdAt}</Text>
-        <Text style={styles.reviewText}>{updatedReview.text}</Text>
-      </View>
-    </View>
-    {isMyReview && (
+      {isMyReview && (
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.openButton} onPress={onOpenPress}>
+          <TouchableOpacity style={styles.openButton} onPress={() => onOpenPress(updatedReview.repositoryId)}>
             <Text style={styles.buttonText}>OPEN REPOSITORY</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.deleteButton} onPress={onDeletePress}>

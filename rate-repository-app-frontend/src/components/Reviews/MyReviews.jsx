@@ -5,8 +5,10 @@ import Text from '../Text';
 import { globalStyles } from '../../utils/styles';
 import ItemSeparator from '../ItemSeparator';
 import ReviewItem from './ReviewItem';
+import { useNavigation } from '@react-navigation/native';
 
 const MyReviews = () => {
+  const navigation = useNavigation();
   const { data } = useQuery(GET_CURRENT_USER, {variables: {
     includeReviews: true
   }}); 
@@ -17,8 +19,8 @@ const MyReviews = () => {
 
   const mappedReviews = data.me.reviews.edges.map((edge) => edge.node);
 
-  const handleOpenPress = () => {
-    console.log('on open press');
+  const handleOpenPress = (repositoryId) => {
+    navigation.navigate('SingleRepositoryView', { repositoryId });
   };
 
   const handleDeletePress = () => {
