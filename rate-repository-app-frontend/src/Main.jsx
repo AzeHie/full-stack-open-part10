@@ -42,6 +42,10 @@ const Main = () => {
     navigation.navigate('NewReview')
   }
 
+  const navigateToMyReviews = () => {
+    navigation.navigate('MyReviews')
+  }
+
   return (
     <View style={styles.container}>
       <AppBar
@@ -50,6 +54,7 @@ const Main = () => {
         onSignUpPress={navigateToSignUp}
         onSignOutPress={handleSignOut}
         onNewReviewPress={handleNewReview}
+        onMyReviewsPress={navigateToMyReviews}
         />
     </View>
   );

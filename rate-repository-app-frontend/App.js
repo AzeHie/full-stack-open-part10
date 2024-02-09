@@ -8,9 +8,10 @@ import AuthStorage from './src/utils/authStorage';
 import AuthStorageContext from './src/contexts/AuthStorageContext';
 import RepositoryItem from './src/components/Repository/RepositoryItem';
 import SingleRepository from './src/components/Repository/SingleRepository';
-import NewReview from './src/components/NewReview';
+import NewReview from './src/components/Reviews/NewReview';
 import Auth from './src/components/Auth/Auth';
 import { Provider as PaperProvider } from 'react-native-paper';
+import MyReviews from './src/components/Reviews/MyReviews';
 
 const authStorage = new AuthStorage();
 const apolloClient = createApolloClient(authStorage);
@@ -38,6 +39,7 @@ export default function App() {
                 initialParams={{ signIn: true }}
               />
               <Stack.Screen name='NewReview' component={NewReview} />
+              <Stack.Screen name='MyReviews' component={MyReviews} />
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>

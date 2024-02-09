@@ -3,7 +3,7 @@ import Constants from 'expo-constants';
 import AppBarTab from './AppBarTab';
 import PressableTab from './PressableTab';
 import { useQuery } from '@apollo/client';
-import { GET_USER } from '../graphql/queries';
+import { GET_CURRENT_USER } from '../graphql/queries';
 import Text from './Text';
 
 const styles = StyleSheet.create({
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onSignUpPress, onNewReviewPress }) => {
-  const { data } = useQuery(GET_USER);
+const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onSignUpPress, onNewReviewPress, onMyReviewsPress }) => {
+  const { data } = useQuery(GET_CURRENT_USER);
 
   if (!data) {
     return (
@@ -45,14 +45,19 @@ const AppBar = ({ onRepositoryListPress, onSignInPress, onSignOutPress, onSignUp
           </PressableTab>
         )}
         {user && (
-          <PressableTab onPress={onSignOutPress}>
-            <AppBarTab tabText='LOG OUT' />
+          <PressableTab onPress={onMyReviewsPress}>
+            <AppBarTab tabText='MY REVIEWS' />
           </PressableTab>
         )}
         {user && (
-        <PressableTab onPress={onNewReviewPress}>
+          <PressableTab onPress={onNewReviewPress}>
           <AppBarTab tabText='ADD REVIEW' />
         </PressableTab>
+        )}
+        {user && (
+          <PressableTab onPress={onSignOutPress}>
+            <AppBarTab tabText='LOG OUT' />
+          </PressableTab>
         )}
       </ScrollView>
     </View>

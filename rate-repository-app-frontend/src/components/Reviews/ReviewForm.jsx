@@ -1,8 +1,8 @@
 import { Formik } from 'formik';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as yup from 'yup';
-import FormikTextInput from './FormikTextInput';
-import Text from './Text';
+import FormikTextInput from '../FormikTextInput';
+import Text from '../Text';
 
 const validationSchema = yup.object().shape({
   ownerName: yup

@@ -7,14 +7,13 @@ import {
   View,
 } from 'react-native';
 
-import { parseISO, format } from 'date-fns';
-
 import Text from '../Text';
 import ItemSeparator from '../ItemSeparator';
 import RepositoryItem from './RepositoryItem';
 import { globalStyles } from '../../utils/styles';
 import useReviews from '../../hooks/useReviews';
 import useSingleRepository from '../../hooks/useSingleRepository';
+import ReviewItem from '../Reviews/ReviewItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,43 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     textAlign: 'center',
-  },
-  reviewContainer: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  reviewRatingContainer: {
-    marginRight: 5,
-  },
-  reviewRatingText: {
-    padding: 10,
-    fontSize: 20,
-    color: 'blue',
-    borderWidth: 2,
-    borderColor: 'blue',
-    borderRadius: 100,
-    textAlign: 'center',
-    width: 60,
-    height: 60,
-    lineHeight: 40, // align text vertically (height - fontsize)
-  },
-  reviewTextContainer: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  reviewText: {
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  reviewUser: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  reviewDate: {},
+  }
 });
 
 const RepositoryInfo = ({ repositoryItem }) => {
@@ -83,31 +46,6 @@ const RepositoryInfo = ({ repositoryItem }) => {
         </TouchableOpacity>
       </View>
       <ItemSeparator />
-    </View>
-  );
-};
-
-const ReviewItem = ({ review }) => {
-  const formatDate = (dateString) => {
-    const date = parseISO(dateString);
-    return format(date, 'dd.MM.yyyy');
-  };
-
-  const updatedReview = {
-    ...review,
-    createdAt: formatDate(review.createdAt),
-  };
-
-  return (
-    <View style={styles.reviewContainer}>
-      <View style={styles.reviewRatingContainer}>
-        <Text style={styles.reviewRatingText}>{updatedReview.rating}</Text>
-      </View>
-      <View style={styles.reviewTextContainer}>
-        <Text style={styles.reviewUser}>{updatedReview.user.username}</Text>
-        <Text style={styles.reviewDate}>{updatedReview.createdAt}</Text>
-        <Text style={styles.reviewText}>{updatedReview.text}</Text>
-      </View>
     </View>
   );
 };
@@ -140,7 +78,7 @@ const SingleRepository = () => {
       data={mappedReviews}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={<RepositoryInfo repositoryItem={repository} />}
-      renderItem={({ item }) => <ReviewItem review={item} />}
+      renderItem={({ item }) => <ReviewItem review={item} isMyReview={false}  />}
       keyExtractor={({ id }) => id}
     />
   );
