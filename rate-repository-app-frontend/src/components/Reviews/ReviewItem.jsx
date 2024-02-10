@@ -83,7 +83,7 @@ const ReviewItem = ({ review, isMyReview, onOpenPress, onDeletePress }) => {
   const updatedReview = {
     ...review,
     createdAt: formatDate(review.createdAt),
-    repositoryId: extractId(review.id)
+    repositoryId: extractId(review.id),
   };
 
   return (
@@ -100,10 +100,16 @@ const ReviewItem = ({ review, isMyReview, onOpenPress, onDeletePress }) => {
       </View>
       {isMyReview && (
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.openButton} onPress={() => onOpenPress(updatedReview.repositoryId)}>
+          <TouchableOpacity
+            style={styles.openButton}
+            onPress={() => onOpenPress(updatedReview.repositoryId)}
+          >
             <Text style={styles.buttonText}>OPEN REPOSITORY</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.deleteButton} onPress={onDeletePress}>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => onDeletePress(review.id)}
+          >
             <Text style={styles.buttonText}>DELETE REVIEW</Text>
           </TouchableOpacity>
         </View>
