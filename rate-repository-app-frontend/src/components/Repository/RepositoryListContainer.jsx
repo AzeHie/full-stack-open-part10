@@ -5,7 +5,7 @@ import ItemSeparator from '../ItemSeparator';
 import RepositoryOrderSelection from './ReposityOrderSelection';
 import RepositorySearch from './RepositorySearch';
 
-const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderChange, orderBy, onSearchChange, searchKeyword }) => {
+const RepositoryListContainer = ({ repositories, onEndReach, onRepositoryItemPress, onOrderChange, orderBy, onSearchChange, searchKeyword }) => {
   if (!repositories) {
     return (
       <View>
@@ -33,6 +33,8 @@ const RepositoryListContainer = ({ repositories, onRepositoryItemPress, onOrderC
         ListHeaderComponent={<RepositoryOrderSelection onOrderChange={onOrderChange} orderBy={orderBy} />}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={renderItem}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );

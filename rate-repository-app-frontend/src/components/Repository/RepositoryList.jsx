@@ -11,7 +11,7 @@ const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
-  const { repositories } = useRepositories(orderBy, debouncedSearchKeyword);
+  const { repositories, fetchMore } = useRepositories(orderBy, debouncedSearchKeyword);
   const navigation = useNavigation();
 
   const handleRepositoryItemPress = (repositoryId) => {
@@ -26,10 +26,15 @@ const RepositoryList = () => {
     setSearchKeyword(keyword);
   }
 
+  const handleEndReach = () => {
+    fetchMore();
+  }
+
   return (
     <View style={globalStyles.container}>
       <RepositoryListContainer
         repositories={repositories}
+        onEndReach={handleEndReach}
         onRepositoryItemPress={handleRepositoryItemPress}
         orderBy={orderBy}
         onOrderChange={handleOrderChange}

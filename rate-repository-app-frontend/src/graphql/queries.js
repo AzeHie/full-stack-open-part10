@@ -1,8 +1,20 @@
 import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
-  query ($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String) {
-    repositories (orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+  query (
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+    $searchKeyword: String
+    $after: String
+  ) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+      first: 4
+      after: $after
+    ) {
+      totalCount
       edges {
         node {
           createdAt
@@ -19,13 +31,19 @@ export const GET_REPOSITORIES = gql`
           stargazersCount
           url
         }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
 `;
 
 export const GET_REPOSITORY_BY_ID = gql`
-  query Repository($repositoryId: ID!) {
+  query Repository($repositoryId: ID!, $after: String) {
     repository(id: $repositoryId) {
       id
       ownerName
@@ -43,26 +61,7 @@ export const GET_REPOSITORY_BY_ID = gql`
       description
       language
       userHasReviewed
-      reviews {
-        edges {
-          node {
-            createdAt
-            id
-            rating
-            text
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const GET_REVIEWS = gql`
-  query ($id: ID!) {
-    repository(id: $id) {
-      id
-      fullName
-      reviews {
+      reviews (first: 4, after: $after) {
         edges {
           node {
             id
@@ -74,6 +73,42 @@ export const GET_REVIEWS = gql`
               username
             }
           }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
+export const GET_REVIEWS = gql`
+  query ($id: ID!, $after: String) {
+    repository(id: $id) {
+      id
+      fullName
+      reviews(first: 4, after: $after) {
+        totalCount
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }

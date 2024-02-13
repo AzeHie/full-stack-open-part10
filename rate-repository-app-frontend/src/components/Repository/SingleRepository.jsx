@@ -11,7 +11,6 @@ import Text from '../Text';
 import ItemSeparator from '../ItemSeparator';
 import RepositoryItem from './RepositoryItem';
 import { globalStyles } from '../../utils/styles';
-import useReviews from '../../hooks/useReviews';
 import useSingleRepository from '../../hooks/useSingleRepository';
 import ReviewItem from '../Reviews/ReviewItem';
 
@@ -59,10 +58,9 @@ const SingleRepository = () => {
     return null;
   }
 
-  const { repository } = useSingleRepository(id);
-  const { reviews } = useReviews(id);
+  const { repository, fetchMore } = useSingleRepository(id);
 
-  if (!repository || !reviews) {
+  if (!repository) {
     return (
       <View>
         <Text>Loading..</Text>
@@ -70,7 +68,11 @@ const SingleRepository = () => {
     );
   }
 
-  const mappedReviews = reviews.reviews.edges.map((edge) => edge.node);
+  const mappedReviews = repository.reviews.edges.map((edge) => edge.node);
+
+  const handleEndReach = () => {
+    fetchMore();
+  }
 
   return (
     <FlatList
@@ -80,6 +82,8 @@ const SingleRepository = () => {
       ListHeaderComponent={<RepositoryInfo repositoryItem={repository} />}
       renderItem={({ item }) => <ReviewItem review={item} isMyReview={false}  />}
       keyExtractor={({ id }) => id}
+      onEndReached={handleEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

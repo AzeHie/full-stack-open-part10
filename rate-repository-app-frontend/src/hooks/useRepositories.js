@@ -33,11 +33,27 @@ const useRepositories = (orderBy, searchKeyword) => {
   const {
     data,
     loading: queryLoading,
+    fetchMore,
     refetch,
   } = useQuery(GET_REPOSITORIES, {
     variables: queryVariables,
     fetchPolicy: 'cache-and-network',
   });
+
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...queryVariables,
+      },
+    });
+  };
 
   const fetchRepositories = async () => {
     setLoading(queryLoading);
@@ -54,9 +70,9 @@ const useRepositories = (orderBy, searchKeyword) => {
     if (data) {
       fetchRepositories();
     }
-  }, [orderBy, searchKeyword]);
+  }, [data, orderBy, searchKeyword]);
 
-  return { repositories, loading, refetch };
+  return { repositories, loading, refetch, fetchMore: handleFetchMore };
 };
 
 export default useRepositories;
